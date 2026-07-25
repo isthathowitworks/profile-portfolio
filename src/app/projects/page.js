@@ -75,7 +75,7 @@ export default function Projects() {
   };
 
   return (
-    <div className="pt-[100px] px-12 pb-16">
+    <div className="pt-[0px] px-12 pb-16">
       <div className="max-w-5xl mx-auto">
         {/* Carousel */}
         <div className="flex items-center justify-center gap-3">

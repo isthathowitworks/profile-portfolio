@@ -142,7 +142,7 @@ export default function Home() {
   };
 
   return (
-    <div className="pt-20 sm:pt-24 md:pt-[100px] px-4 sm:px-6 md:px-12 overflow-x-hidden">
+    <div className="pt-20 sm:pt-24 md:pt-[0px] px-4 sm:px-6 md:px-12 overflow-x-hidden">
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6 md:gap-[30px] text-center sm:text-left">
           <div
