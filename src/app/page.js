@@ -40,8 +40,8 @@ const DRAG_SENSITIVITY = 0.35;
 // Card size / ring radius scale smoothly with viewport width via CSS clamp() —
 // no JS breakpoint detection needed, so there's no hydration/remount race
 // and no flash of the wrong size on first load.
-const CARD_SIZE_CSS = "clamp(80px, 22vw, 160px)";
-const RADIUS_CSS = "clamp(90px, 30vw, 320px)";
+const CARD_SIZE_CSS = "clamp(100px, 26vw, 160px)";
+const RADIUS_CSS = "clamp(140px, 46vw, 320px)";
 
 function normalizeAngle(angle) {
   // wraps to -180..180
@@ -202,11 +202,11 @@ export default function Home() {
             {/* Ring stage */}
             <div className="mt-8 sm:mt-12 flex items-center justify-center gap-4">
               <div
-                className="relative shrink-0 max-w-full overflow-hidden"
+                className="relative shrink-0"
                 style={{
                   "--card-size": CARD_SIZE_CSS,
                   "--radius": RADIUS_CSS,
-                  width: "min(calc(var(--card-size) + var(--radius)), 100%)",
+                  width: "calc(var(--card-size) + var(--radius))",
                   height: "var(--card-size)",
                   perspective: "1200px",
                   touchAction: "pan-y",
