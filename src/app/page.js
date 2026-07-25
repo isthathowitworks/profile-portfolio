@@ -37,12 +37,11 @@ const skills = ["HTML/CSS/JS", "Bootstrap", "VB.NET", "Flutter/Dart", "Next.js (
 const MAX_ANGLE_STEP = 45;
 const DRAG_SENSITIVITY = 0.35;
 
-// Card size / ring radius per breakpoint — these drive inline transforms,
-// so they can't be done with Tailwind's sm:/md: className prefixes.
-const SIZES = {
-  mobile: { cardSize: 110, radius: 150 },
-  desktop: { cardSize: 160, radius: 320 },
-};
+// Card size / ring radius scale smoothly with viewport width via CSS clamp() —
+// no JS breakpoint detection needed, so there's no hydration/remount race
+// and no flash of the wrong size on first load.
+const CARD_SIZE_CSS = "clamp(100px, 26vw, 160px)";
+const RADIUS_CSS = "clamp(140px, 46vw, 320px)";
 
 function normalizeAngle(angle) {
   // wraps to -180..180
@@ -60,22 +59,11 @@ export default function Home() {
   const [isDragging, setIsDragging] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [flipAnimating, setFlipAnimating] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
 
   const startXRef = useRef(0);
   const startRotationRef = useRef(0);
   const draggingRef = useRef(false);
   const draggedRef = useRef(false);
-
-  // Track viewport so the ring's pixel-based sizing can respond to screen size
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 640);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  const { cardSize, radius } = isMobile ? SIZES.mobile : SIZES.desktop;
 
   const baseImage = cooler
     ? "/images/profileimages/withshades.jpeg"
@@ -216,8 +204,10 @@ export default function Home() {
               <div
                 className="relative shrink-0"
                 style={{
-                  width: cardSize + radius,
-                  height: cardSize,
+                  "--card-size": CARD_SIZE_CSS,
+                  "--radius": RADIUS_CSS,
+                  width: "calc(var(--card-size) + var(--radius))",
+                  height: "var(--card-size)",
                   perspective: "1200px",
                   touchAction: "pan-y",
                 }}
@@ -249,12 +239,12 @@ export default function Home() {
                         aria-label={isActive ? `${project.title} — tap to flip` : `Show ${project.title}`}
                         className="absolute"
                         style={{
-                          width: cardSize,
-                          height: cardSize,
+                          width: "var(--card-size)",
+                          height: "var(--card-size)",
                           left: "50%",
                           top: "50%",
                           transformStyle: "preserve-3d",
-                          transform: `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(${radius}px) scale(${scale})`,
+                          transform: `translate(-50%, -50%) rotateY(${cardAngle}deg) translateZ(var(--radius)) scale(${scale})`,
                           opacity,
                           zIndex: Math.round(1000 - dist),
                           transition: isDragging
