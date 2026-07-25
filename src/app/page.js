@@ -37,7 +37,7 @@ const CAROUSEL_SIZES = {
   mobile: { itemWidth: 130, step: 96 },   // < 480px
   small: { itemWidth: 160, step: 130 },   // < 640px
   tablet: { itemWidth: 190, step: 165 },  // < 768px
-  desktop: { itemWidth: 220, step: 220 }, // >= 768px
+  desktop: { itemWidth: 220, step: 190 }, // >= 768px
 };
 
 function getCarouselSize(width) {
@@ -54,9 +54,13 @@ export default function Home() {
   const [isFlipped, setIsFlipped] = useState(false);
   const [flipAnimating, setFlipAnimating] = useState(true);
 
-  // Default to desktop sizing for the server-rendered/first paint; corrected
-  // to the real viewport size immediately on mount via the resize listener.
-  const [carouselSize, setCarouselSize] = useState(CAROUSEL_SIZES.desktop);
+  // Reads the real viewport width synchronously where possible (client-side
+  // re-renders) so sizing is correct immediately, instead of always starting
+  // at desktop size and waiting for the resize listener to correct it.
+  // Falls back to desktop size only during actual server-side rendering.
+  const [carouselSize, setCarouselSize] = useState(() =>
+    typeof window !== "undefined" ? getCarouselSize(window.innerWidth) : CAROUSEL_SIZES.desktop
+  );
 
   const dragStartX = useRef(0);
   const isDraggingRef = useRef(false);
