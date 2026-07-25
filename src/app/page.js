@@ -37,7 +37,7 @@ const CAROUSEL_SIZES = {
   mobile: { itemWidth: 130, step: 96 },   // < 480px
   small: { itemWidth: 160, step: 130 },   // < 640px
   tablet: { itemWidth: 190, step: 165 },  // < 768px
-  desktop: { itemWidth: 220, step: 190 }, // >= 768px
+  desktop: { itemWidth: 220, step: 220 }, // >= 768px
 };
 
 function getCarouselSize(width) {
