@@ -25,7 +25,7 @@ export default function ThemeToggle() {
       <span
         className={`absolute top-1/2 -translate-y-1/2 flex items-center justify-center h-5 w-5 rounded-full transition-all duration-200 ${
           dark
-            ? "bg-orange-600 text-white left-[calc(100%-24px)]"
+            ? "bg-orange-400 text-stone-900 left-[calc(100%-24px)]"
             : "bg-[#f5f0e6] text-stone-900 left-1"
         }`}
       >
