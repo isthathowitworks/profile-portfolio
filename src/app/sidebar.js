@@ -37,7 +37,7 @@ export default function Sidebar() {
             onClick={onNavigate}
             // Padding is FIXED (pl-4 pr-2) for every state — it never
             // changes between active/inactive, so there is no jump.
-            className={`relative flex items-center gap-2 text-base font-medium py-2.5 pl-4 pr-2 rounded-md ${
+            className={`relative flex items-center gap-2 text-base font-medium py-2.5 pl-2 pr-2 rounded-md ${
               navCollapsed ? "justify-center px-2" : ""
             } ${
               isActive
@@ -70,7 +70,7 @@ export default function Sidebar() {
                 than before so the slide is unmistakable. */}
             <span
               className={`relative flex items-center gap-2 transition-transform duration-500 ease-out ${
-                isActive && !navCollapsed ? "translate-x-0" : "translate-x-0"
+                isActive && !navCollapsed ? "translate-x-2" : "translate-x-0"
               }`}
             >
               <Icon size={18} />
